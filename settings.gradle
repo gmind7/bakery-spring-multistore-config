@@ -1,0 +1,9 @@
+rootProject.name = "spring-multistore-config-sample"
+
+include "spring-database-config"
+include "spring-redis-config"
+include "spring-ehcache-config"
+include "spring-memcached-config"
+include "spring-infinispan-config"
+include "spring-rabbitmq-config"
+include "spring-zookeeper-config"
