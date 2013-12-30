@@ -32,7 +32,7 @@ public abstract class AbstractIntegrationTest {
 	
 	@Before
 	public void AuditorAware(){
-		auditorAware.setCurrentAuditor(1L);
+		auditorAware.setAuditor(1L);
 	}
 	
 	@Before

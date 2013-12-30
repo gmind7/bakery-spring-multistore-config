@@ -4,15 +4,15 @@ import org.springframework.data.domain.AuditorAware;
 
 public class AuditorAwareOperations implements AuditorAware<Object> {
 
-	private Object currentAuditor;
+	private Object auditor;
 
-	public void setCurrentAuditor(Object currentAuditor) {
-		this.currentAuditor = currentAuditor;
+	public void setAuditor(Object auditor) {
+		this.auditor = auditor;
 	}
 
 	@Override
 	public Object getCurrentAuditor() {
-		return currentAuditor;
+		return auditor;
 	}
 
 }
