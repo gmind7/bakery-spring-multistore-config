@@ -65,6 +65,7 @@ configure(allprojects) {
 	  maven { url "http://repo.spring.io/libs-milestone" }
 	  maven { url "http://repo.spring.io/libs-snapshot" }
 	  maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
+	  maven { url "https://raw.github.com/gmind7/gmind7.maven.repository/master/releases" }
 	}
 	
 	dependencies {
@@ -108,6 +109,8 @@ configure(subprojects) { subproject ->
 	}
 
 	dependencies {
+	  // Gmind7
+	  compile("com.gmind7.bakery:spring-application-config:$bakeryVersion") { force = true }
 		
 	  // Spring
 	  compile("org.springframework:spring-core:$springVersion") { force = true }
@@ -174,10 +177,14 @@ project("spring-infinispan-config"){
 
 project("spring-database-config"){
 	dependencies {
+	  // Bakery
+	  compile project(":spring-ehcache-config")
+	  
 	  // Spring
 	  compile("org.springframework:spring-orm:$springVersion") { force = true }
 	  compile("org.springframework:spring-jdbc:$springVersion") { force = true }
 	  compile("org.springframework.data:spring-data-jpa:$springDataJpaVersion") { force=true }
+	  //compile("org.springframework.data:spring-data-rest-repository:$springDataRepositoryVersion") { force=true }
 	  compile("org.springframework.data:spring-data-redis:$springDataRedisVersion") { force=true }
 	  compile("org.springframework.data:spring-data-jdbc-core:$springDataJdbcVersion") { force=true }
 	  
@@ -197,7 +204,12 @@ project("spring-database-config"){
 	  compile "com.mysema.querydsl:querydsl-core:$queryDslVersion"
 	  compile "com.mysema.querydsl:querydsl-apt:$queryDslVersion"
 	  compile "com.mysema.querydsl:querydsl-jpa:$queryDslVersion"
-	  compile "com.mysema.querydsl:querydsl-sql:$queryDslVersion"	  
+	  compile "com.mysema.querydsl:querydsl-sql:$queryDslVersion"
+	  
+	  // Ehcache
+	  compile "org.hibernate:hibernate-ehcache:$hibernateVersion"
+	  compile "net.sf.ehcache:ehcache-core:$ehcacheVersion"
+	  
     }
 }
 

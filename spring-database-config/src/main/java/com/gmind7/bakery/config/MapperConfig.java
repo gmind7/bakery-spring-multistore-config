@@ -20,7 +20,7 @@ public class MapperConfig {
 	private Environment environment;
 	
 	@Inject
-	private DataSourceConfig dataConfig;
+	private DataSourceConfig dataSourceConfig;
 	
 	@Bean(name="mybatisSessionFactory")
 	public SqlSessionFactoryBean mybatisSessionFactory() {
@@ -30,7 +30,7 @@ public class MapperConfig {
 		mybatisProperties.setProperty("typeAliasesPackage", environment.getRequiredProperty("mybatis.typeAliasesPackage"));
 		
 		SqlSessionFactoryBean mybatisSessionFactory = new SqlSessionFactoryBean();
-		mybatisSessionFactory.setDataSource(dataConfig.dataSource());
+		mybatisSessionFactory.setDataSource(dataSourceConfig.dataSource());
 		mybatisSessionFactory.setConfigurationProperties(mybatisProperties);
 		return mybatisSessionFactory;
 	}
@@ -38,7 +38,7 @@ public class MapperConfig {
 	@Bean(name = "mybatisTX")
 	public PlatformTransactionManager mybatisTransactionManager(){
 		DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
-		transactionManager.setDataSource(dataConfig.dataSource());
+		transactionManager.setDataSource(dataSourceConfig.dataSource());
 		transactionManager.setNestedTransactionAllowed(true);
 		return transactionManager;
 	}

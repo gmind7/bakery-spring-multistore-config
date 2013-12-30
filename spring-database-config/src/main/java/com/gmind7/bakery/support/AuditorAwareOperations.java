@@ -2,16 +2,17 @@ package com.gmind7.bakery.support;
 
 import org.springframework.data.domain.AuditorAware;
 
-public class AuditorAwareOperations implements AuditorAware<Long> {
+public class AuditorAwareOperations implements AuditorAware<Object> {
 
-	private long auditor;
+	private Object currentAuditor;
 
-	public void setAuditor(Long auditor) {
-		this.auditor = auditor;
+	public void setCurrentAuditor(Object currentAuditor) {
+		this.currentAuditor = currentAuditor;
 	}
 
-	public Long getCurrentAuditor() {
-		return auditor;
+	@Override
+	public Object getCurrentAuditor() {
+		return currentAuditor;
 	}
 
 }

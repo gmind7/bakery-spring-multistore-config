@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jdbc.query.QueryDslJdbcTemplate;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
@@ -26,45 +28,27 @@ public class JpaConfig {
 	private Environment environment;
 	
 	@Inject
-	private DataSourceConfig dataConfig;
-	
-	public Properties jpaProperties(){
-		
-		Properties properties = new Properties();
-		
-		properties.setProperty("hibernate.enable_lazy_load_no_trans", environment.getRequiredProperty("hibernate.enable_lazy_load_no_trans"));
-		properties.setProperty("hibernate.auto_close_session", environment.getRequiredProperty("hibernate.auto_close_session"));
-		properties.setProperty("hibernate.cache.use_second_level_cache", environment.getRequiredProperty("hibernate.cache.use_second_level_cache"));
-		properties.setProperty("hibernate.cache.use_query_cache", environment.getRequiredProperty("hibernate.cache.use_query_cache"));
-		properties.setProperty("hibernate.generate_statistics", environment.getRequiredProperty("hibernate.generate_statistics"));
-		properties.setProperty("net.sf.ehcache.configurationResourceName", environment.getRequiredProperty("hibernate.net.sf.ehcache.configurationResourceName"));
-		properties.setProperty("hibernate.cache.region.factory_class", environment.getRequiredProperty("hibernate.cache.region.factory_class"));
-		
-		return properties;
-	}
+	private DataSourceConfig dataSourceConfig;
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
-		HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
-		
-		jpaVendorAdapter.setGenerateDdl(environment.getRequiredProperty("hibernate.generateDdl", boolean.class));
-		jpaVendorAdapter.setShowSql(environment.getRequiredProperty("hibernate.showSql", boolean.class));
-		jpaVendorAdapter.setDatabase(getDatabaseType());
-		jpaVendorAdapter.setDatabasePlatform(environment.getRequiredProperty("hibernate.dialectType"));
-		
-		LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
-		factory.setJpaVendorAdapter(jpaVendorAdapter);
-		factory.setPackagesToScan(environment.getRequiredProperty("hibernate.dialectType"));
-		factory.setMappingResources(environment.getRequiredProperty("META-INF/orm.xml"));
-		factory.setJpaProperties(jpaProperties());
-		factory.setDataSource(dataConfig.dataSource());
-		
-		factory.afterPropertiesSet();
-		return factory;
+		JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
+		LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
+		entityManager.setJpaVendorAdapter(jpaVendorAdapter);
+		entityManager.setPackagesToScan(environment.getRequiredProperty("hibernate.packagesToScan"));
+		entityManager.setMappingResources(environment.getRequiredProperty("hibernate.mappingResources"));
+		entityManager.setDataSource(dataSourceConfig.dataSource());
+		entityManager.setJpaProperties(additionalProperties());
+		return entityManager;
+	}
+	
+	@Bean
+	public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
+		return new PersistenceExceptionTranslationPostProcessor();
 	}
 	
 	@Primary
-	@Bean	
+	@Bean
 	public PlatformTransactionManager transactionManager(){
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		txManager.setEntityManagerFactory(entityManagerFactory().getObject());
@@ -73,15 +57,26 @@ public class JpaConfig {
 	
 	@Bean
 	public QueryDslJdbcTemplate queryDslJdbcTemplate(){
-		return new QueryDslJdbcTemplate(dataConfig.dataSource());
+		return new QueryDslJdbcTemplate(dataSourceConfig.dataSource());
 	}
 	
-	private Database getDatabaseType(){
-		String database = environment.getRequiredProperty("hibernate.databaseType");
-		for(Database dbType : Database.values())	{
-			if(dbType.name().equals(database)) return dbType;
-		}
-		return Database.DEFAULT;
+	public Properties additionalProperties(){
+		Properties properties = new Properties();
+		properties.setProperty("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+		properties.setProperty("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
+		properties.setProperty("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
+		properties.setProperty("hibernate.use_sql_comments", environment.getRequiredProperty("hibernate.use_sql_comments"));
+		properties.setProperty("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+		properties.setProperty("hibernate.enable_lazy_load_no_trans", environment.getRequiredProperty("hibernate.enable_lazy_load_no_trans"));
+		properties.setProperty("hibernate.auto_close_session", environment.getRequiredProperty("hibernate.auto_close_session"));
+		properties.setProperty("hibernate.cache.use_second_level_cache", environment.getRequiredProperty("hibernate.cache.use_second_level_cache"));
+		properties.setProperty("hibernate.cache.use_query_cache", environment.getRequiredProperty("hibernate.cache.use_query_cache"));
+		properties.setProperty("hibernate.generate_statistics", environment.getRequiredProperty("hibernate.generate_statistics"));
+		properties.setProperty("net.sf.ehcache.configurationResourceName", environment.getRequiredProperty("hibernate.net.sf.ehcache.configurationResourceName"));
+		properties.setProperty("hibernate.cache.region.factory_class", environment.getRequiredProperty("hibernate.cache.region.factory_class"));
+		properties.setProperty("hibernate.jdbc.batch_size", environment.getRequiredProperty("hibernate.jdbc.batch_size"));
+		return properties;
 	}
+	
 	
 }
