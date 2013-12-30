@@ -5,24 +5,24 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-public class RedisPropertyConfig {
+public class DefaultDatabasePropertyConfig {
 
 	@Configuration
 	@Profile("loc")
-	@PropertySource("classpath:environment/redis_loc.properties")
-	static class redisLocalProp {
+	@PropertySource("classpath:environment/database_loc.properties")
+	static class databaseLocalProp {
 	}
 	
 //	@Configuration
 //	@Profile("dev")
-//	@PropertySource("classpath:environment/redis_dev.properties")
-//	static class redisDevProp {
+//	@PropertySource("classpath:environment/database_dev.properties")
+//	static class databaseDevProp {
 //	}
 //	
 //	@Configuration
 //	@Profile("live")
-//	@PropertySource("classpath:environment/redis_live.properties")
-//	static class redisLiveProp {
+//	@PropertySource("classpath:environment/database_live.properties")
+//	static class databaseLiveProp {
 //	}
 	
 }

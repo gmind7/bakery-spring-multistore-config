@@ -5,24 +5,24 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-public class RedisPropertyConfig {
-
+public class DefaultInfinispanPropertyConfig {
+	
 	@Configuration
 	@Profile("loc")
-	@PropertySource("classpath:environment/redis_loc.properties")
-	static class redisLocalProp {
+	@PropertySource("classpath:environment/infinispan_loc.properties")
+	static class infinispanLocalProp {
 	}
 	
 //	@Configuration
 //	@Profile("dev")
-//	@PropertySource("classpath:environment/redis_dev.properties")
-//	static class redisDevProp {
+//	@PropertySource("classpath:environment/infinispan_dev.properties")
+//	static class infinispanDevProp {
 //	}
 //	
 //	@Configuration
 //	@Profile("live")
-//	@PropertySource("classpath:environment/redis_live.properties")
-//	static class redisLiveProp {
+//	@PropertySource("classpath:environment/infinispan_live.properties")
+//	static class infinispanLiveProp {
 //	}
 	
 }

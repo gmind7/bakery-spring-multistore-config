@@ -8,7 +8,6 @@ import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
@@ -17,17 +16,14 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class MapperConfig {
 	
 	@Inject
-	private Environment environment;
-	
-	@Inject
-	private DataSourceConfig dataConfig;
+	private DataBaseConfig dataConfig;
 	
 	@Bean(name="mybatisSessionFactory")
 	public SqlSessionFactoryBean mybatisSessionFactory() {
 		Properties mybatisProperties = new Properties();
-		mybatisProperties.setProperty("mapperLocations", environment.getRequiredProperty("mybatis.mapperLocations"));
-		mybatisProperties.setProperty("configLoaction", environment.getRequiredProperty("mybatis.configLoaction"));
-		mybatisProperties.setProperty("typeAliasesPackage", environment.getRequiredProperty("mybatis.typeAliasesPackage"));
+		mybatisProperties.setProperty("mapperLocations", "classpath*:com/gmind7/**/*Mapper.xml");
+		mybatisProperties.setProperty("configLoaction", "META-INF/mapper.xml");
+		mybatisProperties.setProperty("typeAliasesPackage", "com.gmind7.**");
 		
 		SqlSessionFactoryBean mybatisSessionFactory = new SqlSessionFactoryBean();
 		mybatisSessionFactory.setDataSource(dataConfig.dataSource());

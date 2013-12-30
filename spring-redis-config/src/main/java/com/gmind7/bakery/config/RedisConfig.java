@@ -12,8 +12,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import redis.clients.jedis.JedisPoolConfig;
 
-import com.gmind7.bakery.config.handler.RedisNode;
-import com.gmind7.bakery.config.handler.RedisSourceTemplate;
+import com.gmind7.bakery.handler.RedisNode;
+import com.gmind7.bakery.handler.RedisSourceTemplate;
 
 @Configuration
 public class RedisConfig {
