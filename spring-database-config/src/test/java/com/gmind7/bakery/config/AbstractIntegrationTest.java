@@ -1,4 +1,4 @@
-package com.gmind7.bakery.common;
+package com.gmind7.bakery.config;
 
 import java.sql.Connection;
 import java.sql.SQLException;

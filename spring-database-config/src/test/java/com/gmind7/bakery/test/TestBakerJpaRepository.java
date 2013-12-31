@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.gmind7.bakery.common.AbstractApplicationTest;
+import com.gmind7.bakery.config.AbstractApplicationTest;
 
 public class TestBakerJpaRepository extends AbstractApplicationTest {
 	
