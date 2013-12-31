@@ -48,6 +48,7 @@ configure(allprojects) {
 		resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 		exclude group: "commons-logging"
 		exclude module: "slf4j-log4j12"
+		exclude module: "hibernate-jpa-2.0-api"
 	  }
 	}
 	
@@ -184,7 +185,6 @@ project("spring-database-config"){
 	  compile("org.springframework:spring-orm:$springVersion") { force = true }
 	  compile("org.springframework:spring-jdbc:$springVersion") { force = true }
 	  compile("org.springframework.data:spring-data-jpa:$springDataJpaVersion") { force=true }
-	  //compile("org.springframework.data:spring-data-rest-repository:$springDataRepositoryVersion") { force=true }
 	  compile("org.springframework.data:spring-data-redis:$springDataRedisVersion") { force=true }
 	  compile("org.springframework.data:spring-data-jdbc-core:$springDataJdbcVersion") { force=true }
 	  
@@ -193,7 +193,6 @@ project("spring-database-config"){
 	  compile "org.apache.tomcat:tomcat-jdbc:$apacheTomcatVersion"
 	  	   
 	  // Hibernate
-	  compile "org.hibernate.javax.persistence:hibernate-jpa-2.0-api:$hibernateJpaApi"
 	  compile "org.hibernate:hibernate-entitymanager:$hibernateVersion"
 	  
 	  // Mybatis

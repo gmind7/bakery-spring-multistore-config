@@ -17,7 +17,6 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.gmind7.bakery.handler.DataSourceConfigurationFactory;
 import com.gmind7.bakery.handler.RoutingDataSource;
 
 @Configuration

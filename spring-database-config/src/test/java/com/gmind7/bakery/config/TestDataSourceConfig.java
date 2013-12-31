@@ -5,10 +5,15 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.gmind7.bakery.common.AbstractApplicationTest;
 import com.gmind7.bakery.test.Baker;
 import com.gmind7.bakery.test.BakerJpaRepository;
+import javax.persistence.spi.PersistenceProvider;
+import org.hibernate.ejb.HibernatePersistence;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 
 public class TestDataSourceConfig extends AbstractApplicationTest {
 	
@@ -23,7 +28,7 @@ public class TestDataSourceConfig extends AbstractApplicationTest {
 		source.setUsername("daesungkim");
 		source.setFirstname("kim");
 		source.setLastname("daesung");
-		this.baker = repository.save(new Baker(1L));
+		this.baker = repository.save(source);
 	}
 	
 	@Test

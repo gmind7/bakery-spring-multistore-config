@@ -4,19 +4,16 @@ import java.util.Properties;
 
 import javax.inject.Inject;
 
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jdbc.query.QueryDslJdbcTemplate;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
-import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.Database;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
@@ -32,19 +29,13 @@ public class JpaConfig {
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
-		JpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
 		LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
-		entityManager.setJpaVendorAdapter(jpaVendorAdapter);
+		entityManager.setPersistenceProviderClass(HibernatePersistenceProvider.class);  
 		entityManager.setPackagesToScan(environment.getRequiredProperty("hibernate.packagesToScan"));
 		entityManager.setMappingResources(environment.getRequiredProperty("hibernate.mappingResources"));
 		entityManager.setDataSource(dataSourceConfig.dataSource());
 		entityManager.setJpaProperties(additionalProperties());
 		return entityManager;
-	}
-	
-	@Bean
-	public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
-		return new PersistenceExceptionTranslationPostProcessor();
 	}
 	
 	@Primary
