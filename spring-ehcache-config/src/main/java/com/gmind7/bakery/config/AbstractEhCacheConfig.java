@@ -6,12 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 
 /**
- * 
- * @Class Name   : AbstractEhCacheConfig.java
- * @Description  : @Configuration, @EnableCaching 
- * @Modification :
- * @author       : gmind7 <gmind7@gmail.com>
- * @since        : 2013. 12. 30.
+ * Configuration, EnableCaching
  */
 public abstract class AbstractEhCacheConfig {
 
@@ -37,7 +32,7 @@ public abstract class AbstractEhCacheConfig {
 	
 	
 	/**
-	 * @Bean
+	 * Bean
 	 * @return this.ehCacheManagerFactory();
 	 */
 	public abstract EhCacheCacheManager cacheManager();

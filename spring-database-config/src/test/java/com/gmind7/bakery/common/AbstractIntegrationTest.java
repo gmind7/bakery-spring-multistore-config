@@ -20,7 +20,7 @@ import com.gmind7.bakery.support.AuditorAwareOperations;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
-@TransactionConfiguration(defaultRollback = false)
+@TransactionConfiguration(defaultRollback = true)
 @ActiveProfiles("loc")
 public abstract class AbstractIntegrationTest {
 

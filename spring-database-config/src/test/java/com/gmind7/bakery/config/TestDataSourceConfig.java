@@ -1,34 +1,41 @@
 package com.gmind7.bakery.config;
 
-import static org.junit.Assert.assertEquals;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
 
-import com.gmind7.bakery.common.AbstractApplicationTest;
-import com.gmind7.bakery.test.Baker;
-import com.gmind7.bakery.test.BakerJpaRepository;
+import org.apache.tomcat.jdbc.pool.DataSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 
-public class TestDataSourceConfig extends AbstractApplicationTest {
+import com.gmind7.bakery.handler.RoutingDataSource;
+
+@Configuration
+public class TestDataSourceConfig extends AbstractDataSourceConfig {
+
+	@Inject 
+	private Environment environment;
 	
-	@Autowired
-	private BakerJpaRepository repository;
-	
-	private Baker baker;
-	
-	@Before
-	public void initBaker(){
-		Baker source = new Baker(1L);
-		source.setUsername("daesungkim");
-		source.setFirstname("kim");
-		source.setLastname("daesung");
-		this.baker = repository.save(source);
+	@Bean(destroyMethod = "close")
+	public DataSource defaultDataSource() {
+		DataSource ds = parentDatasource();
+		ds.setDriverClassName(environment.getRequiredProperty("default.ds.jdbc.driverClassName"));
+		ds.setUrl(environment.getRequiredProperty("default.ds.jdbc.url"));		
+		ds.setUsername(environment.getRequiredProperty("default.ds.jdbc.username"));
+		ds.setPassword(environment.getRequiredProperty("default.ds.jdbc.password"));
+		return parentDatasource();
 	}
 	
-	@Test
-	public void test(){
-		Baker result = repository.findOne(1L);
-		assertEquals(baker, result);
+	@Override
+	public RoutingDataSource dataSource() {
+		RoutingDataSource routingDateSource = new RoutingDataSource();
+		Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
+		targetDataSources.put(DataSourceType.DEFAULT, defaultDataSource());
+		routingDateSource.setDefaultTargetDataSource(defaultDataSource());
+		routingDateSource.setTargetDataSources(targetDataSources);
+		return routingDateSource;
 	}
+	
 }

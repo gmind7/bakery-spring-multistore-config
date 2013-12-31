@@ -25,7 +25,7 @@ public class JpaConfig {
 	private Environment environment;
 	
 	@Inject
-	private DataSourceConfig dataSourceConfig;
+	private AbstractDataSourceConfig dataSourceConfig;
 	
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
@@ -53,11 +53,14 @@ public class JpaConfig {
 	
 	public Properties additionalProperties(){
 		Properties properties = new Properties();
-		properties.setProperty("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
+		// Generated SQL
+		properties.setProperty("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+		// Logging
 		properties.setProperty("hibernate.show_sql", environment.getRequiredProperty("hibernate.show_sql"));
 		properties.setProperty("hibernate.format_sql", environment.getRequiredProperty("hibernate.format_sql"));
 		properties.setProperty("hibernate.use_sql_comments", environment.getRequiredProperty("hibernate.use_sql_comments"));
-		properties.setProperty("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+		// Etc
+		properties.setProperty("hibernate.hbm2ddl.auto", environment.getRequiredProperty("hibernate.hbm2ddl.auto"));
 		properties.setProperty("hibernate.enable_lazy_load_no_trans", environment.getRequiredProperty("hibernate.enable_lazy_load_no_trans"));
 		properties.setProperty("hibernate.auto_close_session", environment.getRequiredProperty("hibernate.auto_close_session"));
 		properties.setProperty("hibernate.cache.use_second_level_cache", environment.getRequiredProperty("hibernate.cache.use_second_level_cache"));

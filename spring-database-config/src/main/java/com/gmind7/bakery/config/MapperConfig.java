@@ -20,7 +20,7 @@ public class MapperConfig {
 	private Environment environment;
 	
 	@Inject
-	private DataSourceConfig dataSourceConfig;
+	private AbstractDataSourceConfig dataSourceConfig;
 	
 	@Bean(name="mybatisSessionFactory")
 	public SqlSessionFactoryBean mybatisSessionFactory() {

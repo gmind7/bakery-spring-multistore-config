@@ -69,6 +69,12 @@ configure(allprojects) {
 	  maven { url "https://raw.github.com/gmind7/gmind7.maven.repository/master/releases" }
 	}
 	
+    uploadArchives {
+	  repositories.mavenDeployer {
+		repository(url: "file://D:/Git/gmind7.maven.repository/releases")
+	  }
+	}
+	  
 	dependencies {
 	  // Logging
 	  runtime "ch.qos.logback:logback-classic:$logbackVersion"
@@ -85,14 +91,16 @@ configure(allprojects) {
 
 configure(subprojects) { subproject ->
 
-	apply from: "${gradleScriptDir}/maven.gradle"
-  
 	group = "${group}"
 	
 	javadoc {
 	  options.memberLevel = org.gradle.external.javadoc.JavadocMemberLevel.PROTECTED
 	  options.author = true
 	  options.header = subproject.name
+	}
+	
+	jar {
+	  if(subproject.name=="spring-database-config") exclude("**/DataSourceType.*") 
 	}
   
 	task sourcesJar(type: Jar, dependsOn: classes) {
@@ -152,7 +160,7 @@ configure(subprojects) { subproject ->
 
 project("spring-ehcache-config"){
 	dependencies {
-	  // Ehcache
+      // Ehcache
 	  compile "org.hibernate:hibernate-ehcache:$hibernateVersion"
 	  compile "net.sf.ehcache:ehcache-core:$ehcacheVersion"
 	}

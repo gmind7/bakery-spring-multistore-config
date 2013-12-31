@@ -1,27 +1,20 @@
 package com.gmind7.bakery.config;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.gmind7.bakery.handler.RoutingDataSource;
 
-@Configuration
+//@Configuration
 @EnableTransactionManagement(proxyTargetClass = true, order = 2)
-public class DataSourceConfig {
+public abstract class AbstractDataSourceConfig {
 
 	@Inject
 	private Environment environment;
@@ -29,18 +22,15 @@ public class DataSourceConfig {
 	@Autowired
     private ResourceLoader resourceLoader;
 	
-	//@Autowired
-	//private DataSourceConfigurationFactory[] dataSourceConfigurationFactory;
-	
-	@PostConstruct
-    public void initialize() {
-		String initializeSqlScript = environment.getRequiredProperty("initialize.sqlScript");
-		if(initializeSqlScript==null) return;
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(resourceLoader.getResource(initializeSqlScript));
-        populator.setContinueOnError(true);
-        DatabasePopulatorUtils.execute(populator , dataSource());
-    }
+//	@PostConstruct
+//    public void initialize() {
+//		String initializeSqlScript = environment.getRequiredProperty("initialize.sqlScript");
+//		if(initializeSqlScript==null) return;
+//        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+//        populator.addScript(resourceLoader.getResource(initializeSqlScript));
+//        populator.setContinueOnError(true);
+//        DatabasePopulatorUtils.execute(populator , dataSource());
+//    }
 	
 	@Bean(destroyMethod = "close")
 	@Scope("prototype")
@@ -69,24 +59,24 @@ public class DataSourceConfig {
 		return ds;
 	}
 
-	@Bean(destroyMethod = "close")
-	public DataSource defaultDataSource() {
-		DataSource ds = parentDatasource();
-		ds.setDriverClassName(environment.getRequiredProperty("default.ds.jdbc.driverClassName"));
-		ds.setUrl(environment.getRequiredProperty("default.ds.jdbc.url"));		
-		ds.setUsername(environment.getRequiredProperty("default.ds.jdbc.username"));
-		ds.setPassword(environment.getRequiredProperty("default.ds.jdbc.password"));
-		return parentDatasource();
-	}
+//	@Bean(destroyMethod = "close")
+//	public DataSource defaultDataSource() {
+//		DataSource ds = parentDatasource();
+//		ds.setDriverClassName(environment.getRequiredProperty("default.ds.jdbc.driverClassName"));
+//		ds.setUrl(environment.getRequiredProperty("default.ds.jdbc.url"));		
+//		ds.setUsername(environment.getRequiredProperty("default.ds.jdbc.username"));
+//		ds.setPassword(environment.getRequiredProperty("default.ds.jdbc.password"));
+//		return parentDatasource();
+//	}
 	
 	@Bean(name = "dataSource")
-	public RoutingDataSource dataSource() {
-		RoutingDataSource routingDateSource = new RoutingDataSource();
-		Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
-		targetDataSources.put(DataSourceType.DEFAULT, defaultDataSource());
-		targetDataSources.put(DataSourceType.BAKERY, defaultDataSource());
-		routingDateSource.setDefaultTargetDataSource(defaultDataSource());
-		routingDateSource.setTargetDataSources(targetDataSources);
-		return routingDateSource;
-	}
+	public abstract RoutingDataSource dataSource(); 
+//	{
+//		RoutingDataSource routingDateSource = new RoutingDataSource();
+//		Map<Object, Object> targetDataSources = new HashMap<Object, Object>();
+//		targetDataSources.put(DataSourceType.DEFAULT, defaultDataSource());
+//		routingDateSource.setDefaultTargetDataSource(defaultDataSource());
+//		routingDateSource.setTargetDataSources(targetDataSources);
+//		return routingDateSource;
+//	}
 }
