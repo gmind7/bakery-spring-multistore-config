@@ -1,19 +1,14 @@
 package com.gmind7.bakery.config;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.gmind7.bakery.common.AbstractApplicationTest;
 import com.gmind7.bakery.test.Baker;
 import com.gmind7.bakery.test.BakerJpaRepository;
-import javax.persistence.spi.PersistenceProvider;
-import org.hibernate.ejb.HibernatePersistence;
-import org.hibernate.jpa.HibernatePersistenceProvider;
 
 public class TestDataSourceConfig extends AbstractApplicationTest {
 	

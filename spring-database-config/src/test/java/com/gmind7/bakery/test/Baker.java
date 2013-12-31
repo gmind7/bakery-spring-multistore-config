@@ -3,9 +3,12 @@ package com.gmind7.bakery.test;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity(name="baker")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "baker")
 public class Baker extends AbstractPersistable<Long> {
 
     private static final long serialVersionUID = -2952735933715107252L;

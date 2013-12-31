@@ -10,6 +10,14 @@
 	</defaultCache>
 	
 	<cache
+      name="baker"
+      maxElementsInMemory="10000"
+      eternal="false"
+      timeToIdleSeconds="3600"
+      timeToLiveSeconds="3600">
+    </cache>
+	
+	<cache
 	  name="org.hibernate.cache.internal.StandardQueryCache"
 	  maxElementsInMemory="10000"
 	  eternal="false"
