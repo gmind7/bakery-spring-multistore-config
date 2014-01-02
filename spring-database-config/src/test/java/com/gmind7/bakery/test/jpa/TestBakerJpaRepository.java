@@ -1,4 +1,4 @@
-package com.gmind7.bakery.test;
+package com.gmind7.bakery.test.jpa;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.gmind7.bakery.config.AbstractApplicationTest;
+import com.gmind7.bakery.test.jpa.Baker;
 
 public class TestBakerJpaRepository extends AbstractApplicationTest {
 	

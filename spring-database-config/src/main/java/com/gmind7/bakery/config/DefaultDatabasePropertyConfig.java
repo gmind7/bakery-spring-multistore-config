@@ -13,16 +13,4 @@ public class DefaultDatabasePropertyConfig {
 	static class databaseLocalProp {
 	}
 	
-//	@Configuration
-//	@Profile("dev")
-//	@PropertySource("classpath:environment/database_dev.properties")
-//	static class databaseDevProp {
-//	}
-//	
-//	@Configuration
-//	@Profile("live")
-//	@PropertySource("classpath:environment/database_live.properties")
-//	static class databaseLiveProp {
-//	}
-	
 }

@@ -13,16 +13,4 @@ public class DefaultInfinispanPropertyConfig {
 	static class infinispanLocalProp {
 	}
 	
-//	@Configuration
-//	@Profile("dev")
-//	@PropertySource("classpath:environment/infinispan_dev.properties")
-//	static class infinispanDevProp {
-//	}
-//	
-//	@Configuration
-//	@Profile("live")
-//	@PropertySource("classpath:environment/infinispan_live.properties")
-//	static class infinispanLiveProp {
-//	}
-	
 }

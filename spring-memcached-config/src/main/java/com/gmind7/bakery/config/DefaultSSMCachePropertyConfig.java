@@ -13,16 +13,4 @@ public class DefaultSSMCachePropertyConfig {
 	static class ssmLocalProp {
 	}
 	
-//	@Configuration
-//	@Profile("dev")
-//	@PropertySource("classpath:environment/ssm_dev.properties")
-//	static class ssmDevProp {
-//	}
-//	
-//	@Configuration
-//	@Profile("live")
-//	@PropertySource("classpath:environment/ssm_live.properties")
-//	static class ssmLiveProp {
-//	}
-	
 }
