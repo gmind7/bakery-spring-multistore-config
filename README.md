@@ -1,7 +1,7 @@
 spring-multistore-config-sample
 ===============================
 
-DataStore 관련 프로젝트로 [Bakery Spring Configuration] 모듈과 같이 dependencies 하여 사용할 수 있습니다.
+DataStore 관련 프로젝트로 [Bakery Spring Configuration] 모듈과 같이 dependencies 하여 사용할 수 있습니다. (개발진행중)
 
 ## Project Modules
 
