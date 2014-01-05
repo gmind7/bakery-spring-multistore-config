@@ -1,0 +1,38 @@
+configurations { querydslapt }
+sourceSets {
+	generated {
+		java {
+			srcDirs = ['src/test/java']
+		}
+	}
+}
+idea {
+	module {
+		sourceDirs += file('src/test/java')
+	}
+}
+task generateQueryDSL(type: JavaCompile, group: 'build', description: 'Generates the QueryDSL query types') {
+	source = sourceSets.test.java
+	classpath = configurations.testCompile + configurations.querydslapt
+	options.compilerArgs = [
+			"-proc:only",
+			"-processor", "com.mysema.query.apt.jpa.JPAAnnotationProcessor"
+	]
+	options.encoding = "UTF-8"
+	destinationDir = sourceSets.generated.java.srcDirs.iterator().next()
+}
+
+compileTestJava {
+	dependsOn generateQueryDSL
+	source generateQueryDSL.destinationDir
+}
+
+compileGeneratedJava {
+	dependsOn generateQueryDSL
+	options.warnings = false
+	classpath += sourceSets.test.runtimeClasspath
+}
+
+clean {
+	delete sourceSets.generated.java.srcDirs
+}

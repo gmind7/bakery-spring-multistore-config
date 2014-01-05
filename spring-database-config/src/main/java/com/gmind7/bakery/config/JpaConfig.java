@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
-import org.springframework.data.jdbc.query.QueryDslJdbcTemplate;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -44,11 +43,6 @@ public class JpaConfig {
 		JpaTransactionManager txManager = new JpaTransactionManager();
 		txManager.setEntityManagerFactory(entityManagerFactory().getObject());
 		return txManager;
-	}	
-	
-	@Bean
-	public QueryDslJdbcTemplate queryDslJdbcTemplate(){
-		return new QueryDslJdbcTemplate(dataSourceConfig.dataSource());
 	}
 	
 	public Properties additionalProperties(){

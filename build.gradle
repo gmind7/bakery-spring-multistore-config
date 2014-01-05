@@ -72,7 +72,7 @@ configure(allprojects) {
 	
     uploadArchives {
 	  repositories.mavenDeployer {
-		repository(url: "file://D:/Git/gmind7.maven.repository/releases")
+		repository(url: "file://F:/Git/gmind7.maven.repository/releases")
 	  }
 	}
 	  
@@ -186,6 +186,10 @@ project("spring-infinispan-config"){
 }
 
 project("spring-database-config"){
+	version = "$bakeryDatabaseConfigVersion"
+	
+	apply from: "${gradleScriptDir}/querydsl.gradle"
+	
 	dependencies {
 	  // Bakery
 	  compile project(":spring-ehcache-config")
@@ -209,10 +213,7 @@ project("spring-database-config"){
 	  compile "org.mybatis:mybatis-spring:$mybatisSpringVersion"
 	  
 	  // QueryDSL
-	  compile "com.mysema.querydsl:querydsl-core:$queryDslVersion"
-	  compile "com.mysema.querydsl:querydsl-apt:$queryDslVersion"
-	  compile "com.mysema.querydsl:querydsl-jpa:$queryDslVersion"
-	  compile "com.mysema.querydsl:querydsl-sql:$queryDslVersion"
+	  compile "com.mysema.querydsl:querydsl-apt:$querydslVersion"
 	  
 	  // Ehcache
 	  compile "org.hibernate:hibernate-ehcache:$hibernateVersion"
