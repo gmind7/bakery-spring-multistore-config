@@ -67,12 +67,12 @@ configure(allprojects) {
 	  maven { url "http://repo.spring.io/libs-milestone" }
 	  maven { url "http://repo.spring.io/libs-snapshot" }
 	  maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
-	  maven { url "https://raw.github.com/gmind7/gmind7.maven.repository/master/releases" }
+	  maven { url "https://raw.github.com/gmind7/gmind7.maven.repository/master/lib-releases" }
 	}
 	
     uploadArchives {
 	  repositories.mavenDeployer {
-		repository(url: "file://F:/Git/gmind7.maven.repository/releases")
+		repository(url: "file://D:/Git/gmind7.maven.repository/lib-releases")
 	  }
 	}
 	  
@@ -160,6 +160,9 @@ configure(subprojects) { subproject ->
 }
 
 project("spring-ehcache-config"){
+	
+	version = "$bakerySpringEhcacheConfigVersion"
+	
 	dependencies {
       // Ehcache
 	  compile "org.hibernate:hibernate-ehcache:$hibernateVersion"
@@ -168,6 +171,9 @@ project("spring-ehcache-config"){
 }
 
 project("spring-memcached-config"){
+	
+	version = "$bakerySpringMemcachedConfigVersion"
+	
 	dependencies {
 	  // Memcached
 	  compile "com.google.code.simple-spring-memcached:simple-spring-memcached:$ssmVersion"
@@ -178,6 +184,9 @@ project("spring-memcached-config"){
 }
 
 project("spring-infinispan-config"){
+	
+	version = "$bakerySpringInfinispanConfigVersion"
+	
 	dependencies {
 	  // Infinispan
 	  compile "org.infinispan:infinispan-client-hotrod:$infinispanVersion"            
@@ -186,7 +195,8 @@ project("spring-infinispan-config"){
 }
 
 project("spring-database-config"){
-	version = "$bakeryDatabaseConfigVersion"
+	
+	version = "$bakerySpringDatabaseConfigVersion"
 	
 	apply from: "${gradleScriptDir}/querydsl.gradle"
 	
@@ -200,6 +210,7 @@ project("spring-database-config"){
 	  compile("org.springframework.data:spring-data-jpa:$springDataJpaVersion") { force=true }
 	  compile("org.springframework.data:spring-data-redis:$springDataRedisVersion") { force=true }
 	  compile("org.springframework.data:spring-data-jdbc-core:$springDataJdbcVersion") { force=true }
+	  compile("org.springframework.data:spring-data-jpa:$springDataJpaVersion") { force=true }
 	  
 	  // RDBMS
 	  runtime "org.hsqldb:hsqldb:$hsqldbVersion"
@@ -214,6 +225,7 @@ project("spring-database-config"){
 	  
 	  // QueryDSL
 	  compile "com.mysema.querydsl:querydsl-apt:$querydslVersion"
+	  compile "com.mysema.querydsl:querydsl-jpa:$querydslVersion"
 	  
 	  // Ehcache
 	  compile "org.hibernate:hibernate-ehcache:$hibernateVersion"
@@ -223,6 +235,9 @@ project("spring-database-config"){
 }
 
 project("spring-redis-config"){
+	
+	version = "$bakerySpringRedisConfigVersion"
+	
 	dependencies {
 	  // Spring
 	  compile("org.springframework.data:spring-data-redis:$springDataRedisVersion") { force = true }
