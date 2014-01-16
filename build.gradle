@@ -120,7 +120,7 @@ configure(subprojects) { subproject ->
 
 	dependencies {
 	  // Gmind7
-	  compile("com.gmind7.bakery:spring-application-config:$bakeryVersion") { force = true }
+	  compile("com.gmind7.bakery:spring-application-config:$bakerySpringApplicationVersion") { force = true }
 		
 	  // Spring
 	  compile("org.springframework:spring-core:$springVersion") { force = true }
