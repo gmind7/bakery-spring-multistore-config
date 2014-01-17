@@ -29,9 +29,9 @@ def customizePom(pom, gradleProject) {
 
     // add all items necessary for maven central publication
     generatedPom.project {
-      name = "Spring Configuration Template"
-      description = "Gmind7 Bakery Spring Configuration Teamplte"
-      url = 'https://github.com/gmind7/spring-configuration-sample'
+      name = "Spring Multistore Configuration Template"
+      description = "Gmind7 Bakery Spring Multistore Configuration Teamplte"
+      url = 'https://github.com/gmind7/bakery-spring-multistore-config'
       organization {
         name = 'gmind7'
         url = 'http://gmind7.github.io'
@@ -44,9 +44,9 @@ def customizePom(pom, gradleProject) {
         }
       }
       scm {
-        url = 'http://github.com/gmind7/spring-configuration-sample'
-        connection = 'scm:git:git://github.com/gmind7/spring-configuration-sample'
-        developerConnection = 'scm:git:git://github.com/gmind7/spring-configuration-sample'
+        url = 'http://github.com/gmind7/bakery-spring-multistore-config'
+        connection = 'scm:git:git://github.com/gmind7/bakery-spring-multistore-config'
+        developerConnection = 'scm:git:git://github.com/gmind7/bakery-spring-multistore-config'
       }
       developers {
         developer {
