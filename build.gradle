@@ -73,7 +73,20 @@ configure(allprojects) {
     uploadArchives {
 	  repositories.mavenDeployer {
 		repository(url: "file://D:/Git/gmind7.maven.repository/lib-releases")
+		snapshotRepository(url: "file://D:/Git/gmind7.maven.repository/lib-snapshots")
 	  }
+	}
+	
+	task uploadReleaseArchives(description: "Uploads all artifacts belonging to release configuration..") {
+		dependsOn uploadArchives
+	}
+	
+	gradle.taskGraph.whenReady {taskGraph ->
+		if (taskGraph.hasTask(uploadReleaseArchives)) {
+			version += ''
+		} else {
+			version += '-SNAPSHOT'
+		}
 	}
 	  
 	dependencies {
@@ -102,6 +115,7 @@ configure(subprojects) { subproject ->
 	
 	jar {
 	  if(subproject.name=="spring-database-config") exclude("**/DataSourceType.*") 
+	  baseName = "${prefix}" + baseName
 	}
   
 	task sourcesJar(type: Jar, dependsOn: classes) {
@@ -120,7 +134,7 @@ configure(subprojects) { subproject ->
 
 	dependencies {
 	  // Gmind7
-	  compile("com.gmind7.bakery:spring-application-config:$bakerySpringApplicationVersion") { force = true }
+	  compile("com.gmind7.bakery:bakery-spring-application-config:$bakerySpringApplicationVersion") { force = true }
 		
 	  // Spring
 	  compile("org.springframework:spring-core:$springVersion") { force = true }
