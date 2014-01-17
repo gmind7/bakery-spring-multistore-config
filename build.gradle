@@ -1,4 +1,4 @@
-description = "Spring Multistore Config Sample"
+description = "Bakery Spring Multistore Config"
 
 defaultTasks 'build'
 
@@ -67,13 +67,13 @@ configure(allprojects) {
 	  maven { url "http://repo.spring.io/libs-milestone" }
 	  maven { url "http://repo.spring.io/libs-snapshot" }
 	  maven { url "https://repository.jboss.org/nexus/content/repositories/releases" }
-	  maven { url "https://raw.github.com/gmind7/gmind7.maven.repository/master/lib-releases" }
+	  maven { url "https://raw.github.com/gmind7/bakery.maven.repository/master/lib-releases" }
 	}
 	
     uploadArchives {
 	  repositories.mavenDeployer {
-		repository(url: "file://D:/Git/gmind7.maven.repository/lib-releases")
-		snapshotRepository(url: "file://D:/Git/gmind7.maven.repository/lib-snapshots")
+		repository(url: "file://D:/Git/bakery.maven.repository/lib-releases")
+		snapshotRepository(url: "file://D:/Git/bakery.maven.repository/lib-snapshots")
 	  }
 	}
 	
@@ -83,7 +83,7 @@ configure(allprojects) {
 	
 	gradle.taskGraph.whenReady {taskGraph ->
 		if (taskGraph.hasTask(uploadReleaseArchives)) {
-			version += ''
+			version += '-RELEASE'
 		} else {
 			version += '-SNAPSHOT'
 		}
@@ -113,11 +113,6 @@ configure(subprojects) { subproject ->
 	  options.header = subproject.name
 	}
 	
-	jar {
-	  if(subproject.name=="spring-database-config") exclude("**/DataSourceType.*") 
-	  baseName = "${prefix}" + baseName
-	}
-  
 	task sourcesJar(type: Jar, dependsOn: classes) {
 	  classifier = "sources"
 	  from sourceSets.main.allJava
@@ -173,7 +168,7 @@ configure(subprojects) { subproject ->
     }
 }
 
-project("spring-ehcache-config"){
+project("bakery-spring-ehcache-config"){
 	
 	version = "$bakerySpringEhcacheConfigVersion"
 	
@@ -184,7 +179,7 @@ project("spring-ehcache-config"){
 	}
 }
 
-project("spring-memcached-config"){
+project("bakery-spring-memcached-config"){
 	
 	version = "$bakerySpringMemcachedConfigVersion"
 	
@@ -197,7 +192,7 @@ project("spring-memcached-config"){
 	}
 }
 
-project("spring-infinispan-config"){
+project("bakery-spring-infinispan-config"){
 	
 	version = "$bakerySpringInfinispanConfigVersion"
 	
@@ -208,7 +203,7 @@ project("spring-infinispan-config"){
     }
 }
 
-project("spring-database-config"){
+project("bakery-spring-database-config"){
 	
 	version = "$bakerySpringDatabaseConfigVersion"
 	
@@ -216,7 +211,7 @@ project("spring-database-config"){
 	
 	dependencies {
 	  // Bakery
-	  compile project(":spring-ehcache-config")
+	  compile project(":bakery-spring-ehcache-config")
 	  
 	  // Spring
 	  compile("org.springframework:spring-orm:$springVersion") { force = true }
@@ -248,7 +243,7 @@ project("spring-database-config"){
     }
 }
 
-project("spring-redis-config"){
+project("bakery-spring-redis-config"){
 	
 	version = "$bakerySpringRedisConfigVersion"
 	
