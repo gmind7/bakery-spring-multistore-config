@@ -7,7 +7,6 @@ import javax.inject.Inject;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -17,7 +16,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 
 @Configuration
 @EnableJpaRepositories("com.gmind7")
-@ImportResource("classpath:spring/auditing-context.xml")
 public class JpaConfig {
 	
 	@Inject
