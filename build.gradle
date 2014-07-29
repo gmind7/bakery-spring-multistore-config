@@ -48,6 +48,7 @@ configure(allprojects) {
 		//Hack to let Gradle pickup latest SNAPSHOTS
 		resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 		exclude group: "commons-logging"
+        exclude group: "org.apache.avro"
 		exclude module: "slf4j-log4j12"
 		exclude module: "hibernate-jpa-2.0-api"
 	  }
@@ -58,7 +59,7 @@ configure(allprojects) {
 	
 	[compileJava, compileTestJava]*.options*.compilerArgs = ["-Xlint:none", "-g", "-encoding", "UTF-8"]
   
-	sourceSets.test.resources.srcDirs = ["src/test/java", "src/test/resources"]
+	//sourceSets.test.resources.srcDirs = ["src/test/java", "src/test/resources"]
   
   	repositories {
 	  mavenLocal()
@@ -76,7 +77,7 @@ configure(allprojects) {
 		snapshotRepository(url: "file://D:/Git/bakery.maven.repository/lib-snapshots")
 	  }
 	}
-	
+
 	task uploadReleaseArchives(description: "Uploads all artifacts belonging to release configuration..") {
 		dependsOn uploadArchives
 	}
@@ -200,6 +201,8 @@ project("bakery-spring-infinispan-config"){
 	  // Infinispan
 	  compile "org.infinispan:infinispan-client-hotrod:$infinispanVersion"            
       compile "org.infinispan:infinispan-spring:$infinispanVersion"
+      compile "org.infinispan:infinispan-remote-query-client:$infinispanVersion"
+      compile "org.infinispan:infinispan-query-dsl:$infinispanVersion"
     }
 }
 
