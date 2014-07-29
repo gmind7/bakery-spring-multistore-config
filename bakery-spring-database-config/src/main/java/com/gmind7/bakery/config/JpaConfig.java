@@ -58,9 +58,12 @@ public class JpaConfig {
 		properties.setProperty("hibernate.cache.use_second_level_cache", environment.getRequiredProperty("hibernate.cache.use_second_level_cache"));
 		properties.setProperty("hibernate.cache.use_query_cache", environment.getRequiredProperty("hibernate.cache.use_query_cache"));
 		properties.setProperty("hibernate.generate_statistics", environment.getRequiredProperty("hibernate.generate_statistics"));
-		properties.setProperty("net.sf.ehcache.configurationResourceName", environment.getRequiredProperty("hibernate.net.sf.ehcache.configurationResourceName"));
-		properties.setProperty("hibernate.cache.region.factory_class", environment.getRequiredProperty("hibernate.cache.region.factory_class"));
-		properties.setProperty("hibernate.jdbc.batch_size", environment.getRequiredProperty("hibernate.jdbc.batch_size"));
+        properties.setProperty("hibernate.cache.region.factory_class", environment.getRequiredProperty("hibernate.cache.region.factory_class"));
+        properties.setProperty("hibernate.jdbc.batch_size", environment.getRequiredProperty("hibernate.jdbc.batch_size"));
+
+        String ehcacheResourceName = (String)environment.getProperty("hibernate.net.sf.ehcache.configurationResourceName");
+        if(ehcacheResourceName!=null) properties.setProperty("net.sf.ehcache.configurationResourceName", environment.getProperty("hibernate.net.sf.ehcache.configurationResourceName"));
+
 		return properties;
 	}
 	
