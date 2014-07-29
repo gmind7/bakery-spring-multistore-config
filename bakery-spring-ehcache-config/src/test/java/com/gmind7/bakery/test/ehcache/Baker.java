@@ -1,7 +1,11 @@
 package com.gmind7.bakery.test.ehcache;
 
-public class Baker {
-	
+import java.io.Serializable;
+
+public class Baker implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
 	private long id;
 	
     private String username;
