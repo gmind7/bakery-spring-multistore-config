@@ -26,8 +26,8 @@ public class InfinispanConfig {
     @Bean
 	public SpringRemoteCacheManagerFactoryBean infinispanCacheManagerFactory() {
 		SpringRemoteCacheManagerFactoryBean remoteCacheManager = new SpringRemoteCacheManagerFactoryBean();
-		remoteCacheManager.setConfigurationProperties(cacheProperties());
-		return remoteCacheManager;
+        remoteCacheManager.setConfigurationProperties(cacheProperties());
+        return remoteCacheManager;
 	}
 	
 	public Properties cacheProperties(){

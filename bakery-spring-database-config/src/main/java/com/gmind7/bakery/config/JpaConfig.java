@@ -60,12 +60,15 @@ public class JpaConfig {
 		properties.setProperty("hibernate.generate_statistics", environment.getRequiredProperty("hibernate.generate_statistics"));
         properties.setProperty("hibernate.cache.region.factory_class", environment.getRequiredProperty("hibernate.cache.region.factory_class"));
         properties.setProperty("hibernate.jdbc.batch_size", environment.getRequiredProperty("hibernate.jdbc.batch_size"));
+        properties.setProperty("hibernate.cache.use_structured_entries", "true");
+
+        String infinispanConfig = (String)environment.getProperty("hibernate.cache.infinispan.cfg");
+        if(infinispanConfig!=null) properties.setProperty("hibernate.cache.infinispan.cfg", infinispanConfig);
 
         String ehcacheResourceName = (String)environment.getProperty("hibernate.net.sf.ehcache.configurationResourceName");
-        if(ehcacheResourceName!=null) properties.setProperty("net.sf.ehcache.configurationResourceName", environment.getProperty("hibernate.net.sf.ehcache.configurationResourceName"));
+        if(ehcacheResourceName!=null) properties.setProperty("net.sf.ehcache.configurationResourceName", ehcacheResourceName);
 
 		return properties;
 	}
-	
-	
+
 }

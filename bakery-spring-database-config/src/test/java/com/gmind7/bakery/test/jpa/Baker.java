@@ -8,7 +8,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity(name="baker")
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE, region = "sample")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "baker")
 public class Baker extends AbstractPersistable<Long> {
 
     private static final long serialVersionUID = 1L;
